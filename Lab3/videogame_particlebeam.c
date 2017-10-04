@@ -23,6 +23,7 @@ volatile SpiChannel spiChn = SPI_CHANNEL2 ;	// the SPI channel to use
 
 // string buffer
 char buffer[60];
+char strng[60];
 
 // === thread structures ============================================
 // thread control structs
@@ -85,11 +86,11 @@ static PT_THREAD (protothread_timer(struct pt *pt))
 // update a 1 second tick counter
 //static fix16 xc1=int2fix16(10), yc1=int2fix16(150), vxc1=int2fix16(10), vyc1=0;
 //static fix16 xc2=int2fix16(200), yc2=int2fix16(150), vxc2=int2fix16(-10), vyc2=0;
-static fix16 xc[2]={int2fix16(10),int2fix16(200)}; 
+static fix16 xc[2]={int2fix16(25),int2fix16(75)}; 
 static fix16 yc[2]={int2fix16(150),int2fix16(150)};
-static fix16 vxc[2]={int2fix16(10),int2fix16(-10)};
-static fix16 vyc[2]={int2fix16(0),int2fix16(0)};
-static fix16 g = float2fix16(0.1), drag = float2fix16(.001);
+static fix16 vxc[2]={int2fix16(3),int2fix16(-3)};
+static fix16 vyc[2]={int2fix16(3),int2fix16(3)};
+static fix16 g = float2fix16(0.1), drag = float2fix16(0.00001);
 
 static fix16 r12x, r12y, v12x, v12y, r12_dot_v12, dvx, dvy, mag_r12sq;
 
@@ -101,7 +102,7 @@ static PT_THREAD (protothread_anim(struct pt *pt))
         // yield time 1 second
         PT_YIELD_TIME_msec(32);
         int i;
-        int hit_count;
+        int hit_count=0;
         for(i=0;i<2;i++){
             // erase disk
             
@@ -117,21 +118,37 @@ static PT_THREAD (protothread_anim(struct pt *pt))
             
             // walls
             if (xc[i]<int2fix16(5) || xc[i]>int2fix16(235)) vxc[i] = -vxc[i]; 
-            if (yc[i]>int2fix16(315)) vyc[i] = -vyc[i]; 
+            if (yc[i]<int2fix16(5) || yc[i]>int2fix16(315)) vyc[i] = -vyc[i]; 
             
-            if (abs(xc[1]-xc[2])<=4 && abs(yc[1]-yc[2])<=4){
-                r12x = xc[1]-xc[2];
-                r12y = yc[1]-yc[2];
-                if(r12x^2 + r12y^2 < 64 && hit_count==0){
-                    v12x = vxc[1]-vxc[2];
-                    v12y = vyc[1]-vyc[2];
-                    r12_dot_v12 = r12x*v12x+v12y*v12y;
-                    mag_r12sq = r12x^2+r12y^2;
-                    dvx = -r12x*r12_dot_v12 / mag_r12sq;
-                    dvy = -r12y*r12_dot_v12 / mag_r12sq;
+                
+        //NEST FOR LOOP HERE    
+            if (absfix16(xc[0]-xc[1])<= int2fix16(4) && absfix16(yc[0]-yc[1])<= int2fix16(4)){                
+                tft_fillRoundRect(0,20, 100, 14, 1, ILI9340_BLACK);// x,y,w,h,radius,color
+                tft_setCursor(0, 20);
+                tft_setTextColor(ILI9340_YELLOW); tft_setTextSize(2);
+                sprintf(strng,"enters loop");
+                tft_writeString(strng);
+                
+                r12x = xc[0]-xc[1];
+                r12y = yc[0]-yc[1];
+                mag_r12sq = multfix16(r12x, r12x)+ multfix16(r12y, r12y);
+//                if (mag_r12sq <= int2fix16(4)){
+//                    fix16 ix = vxc[0];
+//                    fix16 iy = vyc[0];
+//                    vxc[0] = vxc[1];
+//                    vxc[1] = ix;
+//                    vyc[0] = vyc[1];
+//                    vyc[1] = iy;
+//                }
+                if(mag_r12sq < int2fix16(64) && hit_count==0){
+                    v12x = vxc[0]-vxc[1];
+                    v12y = vyc[0]-vyc[1];
+                    r12_dot_v12 = multfix16(r12x, v12x)+ multfix16(v12y, v12y);
+                    dvx = divfix16(multfix16(-r12x, r12_dot_v12), mag_r12sq); //bit shift by 4 instead possibly?
+                    dvy = divfix16(multfix16(-r12y, r12_dot_v12), mag_r12sq);
                     
-                    vxc[1] = vxc[1]+dvx;
-                    vxc[2] = vxc[2]-dvx;
+                    vxc[0] = vxc[0]+dvx;
+                    vxc[1] = vxc[1]-dvx;
                     hit_count = 10;
                 }
                 else if (hit_count>0){
