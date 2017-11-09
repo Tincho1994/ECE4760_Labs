@@ -73,13 +73,18 @@ bit 11-0 D11:D0: DAC Input Data bits. Bit x is ignored.
 // string buffer
 char buffer[60];
 
-static struct pt pt_adc, pt_gui, pt_time, pt_feedack;
+static struct pt pt_adc, pt_button, pt_gui, pt_time, pt_feedack;
 
 //system timer
-int sys_time_seconds;
+int sys_time_seconds=0;
 
 //KEYPAD STATEMACHINE
 int pushState = 0;
+
+//key variables
+int threshold;
+int menuSel = 0;
+int start = 0;
 
 //== Timer interrupt handler ===========================================
 volatile unsigned int DAC_data, motor;// output value
@@ -105,7 +110,7 @@ static PT_THREAD (protothread_adc(struct pt *pt))
     static float p1, p2, p3, p4;
     p1 = 1.456*0.0000001;
     p2 = 4.596*0.00001;
-    p3 = 0.04746;
+    p3 = 0.0334746;
     p4 = 55.78; 
     
     while(1) {
@@ -119,7 +124,7 @@ static PT_THREAD (protothread_adc(struct pt *pt))
            //calculating degrees Fahrenheit 
            temp = (p1*(adc_1*adc_1*adc_1))-(p2*(adc_1*adc_1))+(p3*adc_1)+p4; 
            
-           tft_fillRoundRect(15, 225, 100, 50, 1, ILI9340_BLACK);// x,y,w,h,radius,color
+           tft_fillRoundRect(15, 225, 150, 50, 1, ILI9340_BLACK);// x,y,w,h,radius,color
            tft_setCursor(15, 250);
            tft_setTextColor(ILI9340_YELLOW); tft_setTextSize(2);
            sprintf(buffer,"%d %6.3f", adc_1, temp); 
@@ -134,20 +139,112 @@ static PT_THREAD (protothread_adc(struct pt *pt))
 static PT_THREAD (protothread_time(struct pt *pt))
 {
     PT_BEGIN(pt);
-
-      while(1) {
+      
+      while(start) {
             // yield time 1 second
+            tft_fillRoundRect(130, 10, 55, 50, 1, ILI9340_BLACK);// x,y,w,h,radius,color
+            tft_setCursor(15, 10);
+            tft_setTextColor(ILI9340_YELLOW); tft_setTextSize(2);
+            sprintf(buffer,"cook time: %d", sys_time_seconds); 
+            tft_writeString(buffer);
+            
             PT_YIELD_TIME_msec(1000);
-            sys_time_seconds++;
+            sys_time_seconds++;      
             // NEVER exit while
       } // END WHILE(1)
 
   PT_END(pt);
 } 
-// thread ==================================================
+// thread ======================================================================
 
-// ========================================================================
-int	main(void)
+//=======BUTTON THREAD=============================================================
+static PT_THREAD (protothread_button(struct pt *pt))
+{
+    PT_BEGIN(pt);
+	//Sets ports as input
+    mPORTBSetPinsDigitalIn(BIT_7| BIT_13);
+    //turns on pull-down on inputs
+    EnablePullDownB(BIT_7 | BIT_13);
+
+      while(1) {
+          PT_YIELD_TIME_msec(200);
+		  //reads if button is pressed
+          if(mPORTBReadBits(BIT_7)){ 
+			  //moves menu selector by incrementing 	
+              menuSel++;
+			  //cylces back to top of menu
+              if(menuSel > 3){
+                menuSel=0;
+              }
+          }
+          if(mPORTBReadBits(BIT_8)){
+              if (start==1) start = 0;
+              else start = 1;
+          }
+          
+          //====how do you want your meat cooked=================
+		  
+		  //RARE
+          
+          if (menuSel == 0){
+            threshold = 125; //130-140 internal temp Rare beef
+          }
+           //Medium Rare
+          if (menuSel == 1){
+                  threshold = 135; //14-150 internal temp medium beef
+          }
+		  //Medium
+          if (menuSel == 2){
+                  threshold = 145; //14-150 internal temp medium beef
+          }
+		  //Well Done
+          if (menuSel == 3){
+                  threshold = 165; // well done
+          }
+      }
+    PT_END(pt);
+}    
+// =============================================================================
+// ==========MENU DISPLAY THREAD================================================
+static PT_THREAD (protothread_gui(struct pt *pt))
+{
+    PT_BEGIN(pt);
+      while(1) {
+            // print every 200 mSec
+            PT_YIELD_TIME_msec(200);
+			//menu selector circle 
+            int circlePos;
+            // erase
+            tft_fillRoundRect(5, 45, 10, 205, 1, ILI9340_BLACK);// x,y,w,h,radius,color
+            //draw selection circle and display menuSel in right location 
+            circlePos = menuSel*50+50;
+            tft_fillCircle(10, circlePos, 5, ILI9340_YELLOW);
+            tft_setTextColor(ILI9340_YELLOW); tft_setTextSize(2);
+            // sets the cursor for Rare 
+            tft_setCursor(15, 50);
+            //writes selection on User interface
+            sprintf(buffer," Rare");
+            tft_writeString(buffer);
+            //sets cursor for Medium Rare
+             tft_setCursor(15, 100);
+            //writes selection on User interface
+            sprintf(buffer," Medium Rare");
+            tft_writeString(buffer);
+            // sets the cursor for Medium
+            tft_setCursor(15, 150);
+            //writes selection on User interface
+            sprintf(buffer," Medium");
+            tft_writeString(buffer); 
+            // sets the cursor for the Well done 
+            tft_setCursor(15, 200);
+            //writes selection on User interface
+            sprintf(buffer," Well Done");
+            tft_writeString(buffer); 
+      } // END WHILE(1)
+    PT_END(pt);
+}
+//==============================================================================
+int main(void)
 {
       ANSELA = 0; ANSELB = 0; 
 	// Configure the device for maximum performance but do not change the PBDIV
@@ -206,13 +303,13 @@ int	main(void)
 
    // define setup parameters for OpenADC10
    // set AN11 and  as analog inputs
-   #define PARAM4 ENABLE_AN11_ANA
+   #define PARAM4 ENABLE_AN1_ANA
 
    // define setup parameters for OpenADC10
    // do not assign channels to scan
    #define PARAM5 SKIP_SCAN_ALL //|SKIP_SCAN_AN5 //SKIP_SCAN_AN1 |SKIP_SCAN_AN5  //SKIP_SCAN_ALL
     
-     SetChanADC10( ADC_CH0_NEG_SAMPLEA_NVREF | ADC_CH0_POS_SAMPLEA_AN11 ); // configure to sample AN11 
+     SetChanADC10( ADC_CH0_NEG_SAMPLEA_NVREF | ADC_CH0_POS_SAMPLEA_AN1); // configure to sample AN11 
     OpenADC10( PARAM1, PARAM2, PARAM3, PARAM4, PARAM5 ); // configure ADC using the parameters defined above
 
     EnableADC10(); // Enable the ADC
@@ -220,7 +317,8 @@ int	main(void)
     PT_INIT(&pt_time);
     PT_INIT(&pt_adc);
     //PT_INIT(&pt_feedback);
-    //PT_INIT(&pt_gui);
+    PT_INIT(&pt_gui);
+    PT_INIT(&pt_button);
     
     tft_init_hw();
     tft_begin();
@@ -232,7 +330,8 @@ int	main(void)
 	while(1)
 	{
         PT_SCHEDULE(protothread_adc(&pt_adc));
-        //PT_SCHEDULE(protothread_gui(&pt_gui));
+        PT_SCHEDULE(protothread_button(&pt_button));
+        PT_SCHEDULE(protothread_gui(&pt_gui));
         //PT_SCHEDULE(protothread_feedback(&pt_feedback));
         PT_SCHEDULE(protothread_time(&pt_time));
  	}
