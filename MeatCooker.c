@@ -78,6 +78,9 @@ static struct pt pt_adc, pt_button, pt_gui, pt_time, pt_feedack;
 //system timer
 int sys_time_seconds=0;
 
+//PWM period
+int generate_period = 40000;
+
 //KEYPAD STATEMACHINE
 int pushState = 0;
 
@@ -99,6 +102,12 @@ void __ISR(_TIMER_2_VECTOR, ipl2) Timer2Handler(void)
 {
     mT2ClearIntFlag();
     adc_1 = ReadADC10(0);
+    
+    //set PWM for motor 1?
+    SetDCOC3PWM(generate_period); 
+    //set PWM for motor 2?
+    SetDCOC2PWM(generate_period);
+    
 }
 
 //=======ADC THREAD===========================
@@ -244,6 +253,27 @@ static PT_THREAD (protothread_gui(struct pt *pt))
     PT_END(pt);
 }
 //==============================================================================
+//=================MOTOR CONTROL/FEEDBACK LOOP==================================
+static PT_THREAD (protothread_feedback(struct pt *pt))
+{
+    PT_BEGIN(pt);
+      while(1) {
+          //check threshold
+          //if past threshold, power one input on hbridge high
+          //yield for a time 
+          //stop by making input low again
+          //turn on second motor using its inputs 
+          //yield for 180 degree flip
+          //stop second motor
+          //turn on 1st motors second input so it climbs back down
+          //continue cooking 
+          //if done threshold, signal finish
+         
+      } // END WHILE(1)
+    PT_END(pt);
+}
+//================================================================================
+
 int main(void)
 {
       ANSELA = 0; ANSELB = 0; 
@@ -278,6 +308,14 @@ int main(void)
 
         // setup system wide interrupts  ///
         INTEnableSystemMultiVectoredInt();
+    
+    OpenOC3(OC_ON | OC_TIMER3_SRC | OC_PWM_FAULT_PIN_DISABLE , generate_period, generate_period);
+    // OC3 is PPS group 4, map to RPB9 (pin )
+    PPSOutput(4, RPB9, OC3);
+       
+    OpenOC2(OC_ON | OC_TIMER2_SRC | OC_PWM_FAULT_PIN_DISABLE , generate_period, generate_period);
+    // OC2 is PPS group 2, map to RPB5 (pin 14)
+    PPSOutput(2, RPB5, OC2);
     
     //====ADC Setup=======
     // configure and enable the ADC
