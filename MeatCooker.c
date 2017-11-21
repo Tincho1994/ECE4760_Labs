@@ -73,7 +73,7 @@ bit 11-0 D11:D0: DAC Input Data bits. Bit x is ignored.
 // string buffer
 char buffer[60];
 
-static struct pt pt_adc, pt_button, pt_gui, pt_time, pt_feedack;
+static struct pt pt_adc, pt_button, pt_gui, pt_time, pt_feedback;
 
 //system timer
 int sys_time_seconds=0;
@@ -88,6 +88,7 @@ int pushState = 0;
 int threshold;
 int menuSel = 0;
 int start = 0;
+int duty = 0;
 
 //== Timer interrupt handler ===========================================
 volatile unsigned int DAC_data, motor;// output value
@@ -104,10 +105,9 @@ void __ISR(_TIMER_2_VECTOR, ipl2) Timer2Handler(void)
     adc_1 = ReadADC10(0);
     
     //set PWM for motor 1?
-    SetDCOC3PWM(generate_period); 
+    SetDCOC3PWM(generate_period/4); 
     //set PWM for motor 2?
-    SetDCOC2PWM(generate_period);
-    
+    SetDCOC2PWM(duty);
 }
 
 //=======ADC THREAD===========================
@@ -124,7 +124,7 @@ static PT_THREAD (protothread_adc(struct pt *pt))
     
     while(1) {
            // yield time 1 second
-           PT_YIELD_TIME_msec(60);
+           PT_YIELD_TIME_msec(1000);
 
            // read the ADC AN1 
            // read the first buffer position
@@ -186,7 +186,7 @@ static PT_THREAD (protothread_button(struct pt *pt))
                 menuSel=0;
               }
           }
-          if(mPORTBReadBits(BIT_8)){
+          if(mPORTBReadBits(BIT_13)){
               if (start==1) start = 0;
               else start = 1;
           }
@@ -254,10 +254,15 @@ static PT_THREAD (protothread_gui(struct pt *pt))
 }
 //==============================================================================
 //=================MOTOR CONTROL/FEEDBACK LOOP==================================
-static PT_THREAD (protothread_feedback(struct pt *pt))
-{
+static PT_THREAD (protothread_feedback(struct pt *pt))  //not initiated in main, can write an input to high to turn motor 
+{                                                       //might need to control in ISR like helicopter lab
     PT_BEGIN(pt);
       while(1) {
+           
+          duty = 10000;
+          PT_YIELD_TIME_msec(2000);
+          duty = 0; // end transaction
+          PT_YIELD_TIME_msec(1000);
           //check threshold
           //if past threshold, power one input on hbridge high
           //yield for a time 
@@ -286,7 +291,7 @@ int main(void)
         // timer interrupt //////////////////////////
         // Set up timer3 on,  interrupts, internal clock, prescalar 1, toggle rate
         //same as generate_period for timer
-        OpenTimer2(T2_ON | T2_SOURCE_INT | T2_PS_1_1, 2000);
+        OpenTimer2(T2_ON | T2_SOURCE_INT | T2_PS_1_1, 40000);
 		//set up the timer interrupt with a priority of 2
         ConfigIntTimer2(T2_INT_ON | T2_INT_PRIOR_2);
         mT2ClearIntFlag(); // and clear the interrupt flag
@@ -354,7 +359,7 @@ int main(void)
 
     PT_INIT(&pt_time);
     PT_INIT(&pt_adc);
-    //PT_INIT(&pt_feedback);
+    PT_INIT(&pt_feedback);
     PT_INIT(&pt_gui);
     PT_INIT(&pt_button);
     
@@ -370,7 +375,7 @@ int main(void)
         PT_SCHEDULE(protothread_adc(&pt_adc));
         PT_SCHEDULE(protothread_button(&pt_button));
         PT_SCHEDULE(protothread_gui(&pt_gui));
-        //PT_SCHEDULE(protothread_feedback(&pt_feedback));
+        PT_SCHEDULE(protothread_feedback(&pt_feedback));
         PT_SCHEDULE(protothread_time(&pt_time));
  	}
 }
