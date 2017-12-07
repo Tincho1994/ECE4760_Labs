@@ -24,6 +24,7 @@
     <!--<script src="scripts/smoothscroll.js"></script>-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!-- <script src="bootstrap/js/bootstrap.js" type="text/javascript"></script>-->
+    <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
 </head>
 
 <body>
@@ -55,8 +56,9 @@
 
 	      <div class="collapse navbar-collapse navHeaderCollapse">
 	        <ul class="nav navbar-nav navbar-right">  
-	        	<li><a class="work_nav" href="#Conclusions">Conclusions</a></li>
-	        	<li><a class="work_nav" href="#Results">Results</a></li>
+	        <li><a class="work_nav" href="#Appendix">Appendix</a></li>
+	        	<li><a class="work_nav" href="#Conclusion">Conclusion</a></li>
+	        	<li><a class="work_nav" href="#Results">Results/ Demo</a></li>
 	        	<li><a class="work_nav" href="#Hardware_Design">Hardware Design</a></li>
 	            <li><a class="contact_nav" href="#Program_Design">Program Design</a></li>  
 	            <li><a class="about_nav" href="#HL_Design">High Level Design</a></li>
@@ -71,117 +73,589 @@
 <!-- Begin Home Content --> 
 <div class="homecontent" >
 <!-- Start Intro Content -->
- <div id="Introduction" class="container" style = "padding-top: 100px">
+ <div id="Introduction" class="container" style = "padding-top: 100px; width: 800px">
 	<h1>Introduction</h1>
-	<div class="row">
-	    <div class="row">
+	<div class="row" style="margin-left: 0px">
+			<div class="col-sm-12">
+	        	<img src="hero.jpg" class = "about_img">
+	        </div>
 	      <div class="col-sm-12">
-	      	<p style = "text-align: center;font-size: 24px;opacity:0.8""><i>"A cooking robot that won't embarass you in front of your friends and family."</i></p>
-	      	<h2>Overview</h2>
+	      	<p style = "text-align: center;font-size: 24px;opacity:0.8""><i>“A robot that allows you to focus on your life, not on cooking your steak.”</i></p>
+	      	</div>
+	      <div class="col-sm-12">
+	      	<h2>Overview and Motivations</h2>
 	        <p>
-	        I grew up in Orlando FL after moving to the U.S. from Medellin, Colombia in '99 and am currently in Ithaca, NY at Cornell University wrapping up my Master's of Engineering in Mechanical Engineering.
+	        We created a steak-cooking robot. All you do is put the steak on the robot’s food-safe skewers and food probe and it does the rest. We decided to create this robot to cook better steaks using precise temperature measurements throughout the entire cooking process and, most importantly, not have to babysit the grill to achieve this.
 	        </p>
 	      </div>
-	     <div class="col-sm-8">
-	        <h2 >Motivations</h2>
-	        <p>
-	        Professionaly I'd describe myself as a mechanical engineer by trade, jack-of-all-trades at heart. I take an inter-disciplinary approach to engineering and take no greater joy at work than wearing multiple hats. My current professional interests lie in robotics and electronic consumer products and my ambition is to help create new ways to empower people and provide them with experiences that make them say "woah.".
-	        </p>
+	      <div class="col-sm-2">
 	      </div>
-	      <div class="col-sm-4">
+	      <div class = "col-sm-8">
+	      	<img src="side.jpg" class = "about_img">
+	      </div>
+	      <div class = "col-sm-2">
+	      </div>
+<!-- 	      <div class="col-sm-4">
 	        <img src="taTime.jpg" class="about_img">
-	      </div>
-	    </div>
+	      </div> -->
 	</div>
  </div>
 <!-- End Intro Content--> 
 
 <!-- Start High Level Design Content -->
- <div id="HL_Design" class="container" style = "padding-top: 100px">
-	<h1 style="margin-left: 5%">High Level Design</h1>
-	<div class="row">
-	    <div class="row">
-	      <div class="col-sm-12">
-	        <p style="margin-left: 10%">
-	        I grew up in Orlando FL after moving to the U.S. from Medellin, Colombia in '99 and am currently in Ithaca, NY at Cornell University wrapping up my Master's of Engineering in Mechanical Engineering.
+ <div id="HL_Design" class="container" style = "padding-top: 100px; width: 800px">
+	<h1>High Level Design</h1>
+	<div class="row" style="margin-left: 0px">
+		  <div class="col-sm-12">
+	      	<h2>Logical Structure</h2>
+	      </div>
+	      <div class = "col-sm-12">
+	        <p>
+	        BeefBot is a robot that cooks a steak for you using temperature sensing with no supervision after being put on the grill. Traditionally, when preparing a steak, it is often hard to get the right doneness without cutting into it to check. There exist other methods, such as using a food thermometer and comparing the feeling of the steak to your palm. These, however, require either looking up the proper temperature for desired doneness or worse, guesswork. We thought it would be very useful to create a device that would cook a steak for you using sensors rather than vague guesses. To accomplish this, we imagined a robot that would integrate with an existing kitchen appliance (stove top, pan, grill, etc.). Initial concept sketches are shown in Figures  *#####* and *#####*. With such a robot, all one would need to do to cook a perfect steak every time is put it on the robot arm and let it do the rest.
 	        </p>
-	        <p style="margin-left: 10%">
-	        Professionaly I'd describe myself as a mechanical engineer by trade, jack-of-all-trades at heart. I take an inter-disciplinary approach to engineering and take no greater joy at work than wearing multiple hats. My current professional interests lie in robotics and electronic consumer products and my ambition is to help create new ways to empower people and provide them with experiences that make them say "woah.".
+	        <div class="col-sm-12">
+	        	<img src="concept.jpg" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig 1: Program Block Diagram</i></p>
+	        </div>
+	        <div class="col-sm-12">
+	        	<img src="detailed.jpg" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig 1: Program Block Diagram</i></p>
+	        </div>
+	        <div class="col-sm-12">
+	        	<img src="concept_final.jpg" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig 1: Program Block Diagram</i></p>
+	        </div>
+
+	      <div class="col-sm-12">
+	      	<h2>Logical Structure</h2>
+	      </div>
+	      <div class = "col-sm-12">
+	        <p>
+	        The main logic of our robot is to have a steak loaded onto the skewers and thermometer and be lowered onto a grill. The steak is flipped at a predetermined temperature and raised from the grill to rest at a predetermined temperature, as shown in the block diagram in Figure 1. Both values could depend on the meat being used and the desired doneness.
 	        </p>
 	      </div>
-	    </div>
+	      <div class = "col-sm-2">
+	      </div>
+	      <div class = "col-sm-8">
+	      	<img src="block.png" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig 1: Program Block Diagram</i></p>
+	      </div>
+	      <div class = "col-sm-2">
+	      </div>
+	     <div class = "col-sm-12">
+	        <h2>Standards</h2>
+	        <p>
+	        Our concern when it came to standards was the food safety of our product, given that it handles raw and cooked meat (standards NSF/ANSI 2). We determined that we needed to use existing food safe parts for anything that would touch the meat, and needed to make those parts accessible to be easily washed between cooks.
+	        </p>
+	        <h2>Intellectual Property</h2>
+	        <p>
+	        The only automatic meat cooker we could find was from a company, Cinder (https://www.cindergrill.com/), who sells an automatic grill. We could not find a product or patent for a design such as ours that uses two degrees of freedom to raise and flip a steak, or an automatic cooker than interfaces with an existing grill. We believe there may be some potential to patent and plan to investigate this in the near future.
+	        </p>
+	      </div>
+
 	</div>
  </div>
 <!-- End High Level Design Content--> 
 
 <!-- Start High Level Design Content -->
- <div id="Program_Design" class="container" style = "padding-top: 100px">
-	<h1 style="margin-left: 5%">Program Design</h1>
-	<div class="row">
-	    <div class="row">
+ <div id="Program_Design" class="container" style = "padding-top: 100px; width: 800px">
+	<h1>Program Design</h1>
+	<div class="row" style="margin-left: 0px">
 	      <div class="col-sm-12">
-	        <p style="margin-left: 10%">
-	        I grew up in Orlando FL after moving to the U.S. from Medellin, Colombia in '99 and am currently in Ithaca, NY at Cornell University wrapping up my Master's of Engineering in Mechanical Engineering.
+	        <p>
+	        The programming for BeefBot was mainly split up into 5 categories: 
+	        	<ul> 
+	        		<li>ADC for internal temperature readings and manual motor movement</li>
+	        		<li>Motor control</li>
+	        		<li>Feedback Loop </li>
+	        		<li>The User Interface</li>
+	        		<li>Cook Time </li>
+	        	</ul>
 	        </p>
-	        <p style="margin-left: 10%">
-	        Professionaly I'd describe myself as a mechanical engineer by trade, jack-of-all-trades at heart. I take an inter-disciplinary approach to engineering and take no greater joy at work than wearing multiple hats. My current professional interests lie in robotics and electronic consumer products and my ambition is to help create new ways to empower people and provide them with experiences that make them say "woah.".
+	        <h2>ADC</h2>
+	        <p>
+	        Before using the ADC, it first had to be set up properly in the main section of the code. We separated the setup into 5 separate parameters.
+	        	<ul>
+	        		<li>Parameter 1</li>
+	        			<ul>
+	        				<li>ADC_FORMAT_INTG16: Allows for the ADC to output in 16 bit integer</li>
+	        				<li>ADC_CLK_AUTO: Internal counter ends sampling and starts conversion (Auto convert)</li>
+	        				<li>ADC_AUTO_SAMPLING_ON: Sampling begins immediately after last conversion completes; SAMP bit is automatically set</li>
+	        			</ul>
+	        		<li>Parameter 2</li>
+	        			<ul>
+	        				<li>ADC_VREF_AVDD_AVSS: Sets the reference voltages for the ADC with Vref+ at Vdd and Vref- at Vss</li>
+	        				<li>ADC_OFFSET_CAL_DISABLE: disables the Offset calibrations which measures offset errors and subtracts it from the conversions</li>
+	        				<li>ADC_SCAN_OFF: This setting scans through a selected vector of inputs. We disable it because we only need to scan for the potentiometer </li>
+	        				<li>ADC_SAMPLES_PER_INT_2: This parameter sets up the ADC to perform two sample every time an interrupt is fired</li>
+	        				<li>ADC_ALT_BUF_OFF: Alternating buffer fills</li>
+	        				<li>ADC_ALT_INPUT_ON: This is used by the ADC module to alternate between the two input multiplexers</li>
+	        			</ul>
+	        		<li>Parameter 3</li>
+	        			<ul>
+	        				<li>ADC_CONV_CLK_PB: This is the peripheral bus clock used to trigger conversions </li>
+	        				<li>ADC_SAMPLE_TIME_15: sets the sample time using the adc clock</li>
+	        				<li>ADC_CONV_CLK_Tcy: means divide CLK_PB by 2 (max speed)</li>
+	        			</ul>
+	        		<li>Parameter 4</li>
+	        			<ul>
+	        				<li>ENABLE_AN1_ANA: Sets AN1 as an analog input</li>
+	        				<li>ENABLE_AN11_ANA: Sets AN11 as an analog input</li>
+	        			</ul>
+	        		<li>Parameter 5</li>
+	        			<ul>
+	        				<li>SKIP_SCAN_ALL: This configures the ADC to not scan any channels</li>
+	        			</ul>
+	        	</ul>
+	        The setup also included code that would allow both ADC reads to be selected separately in the same ADC channel using an internal mux. To read between either input of the ADC, we simply had type ReadADC10() with a one or zero as its input.  
+	        </p>
+	        <p>
+	        As for the two functions of the ADC, we set up a thread for its use. Our first use was for the temperature readings of the thermistor. To convert our ADC readings into actual temperature readings we first had to plot different points on a graph between ADC values and actual temperature and then use equation of the graph within our code. So to take these plot points, we heated water, then placed our thermistor and an actual thermometer in the water. We then plotted several points as it cooled and we even chilled it with ice to get some lower end values. After that, we plotted the points and found the best possible fit to the graph, which turned out to be a logarithmic equation. Next, we passed this equation into our code with the adc reading being the variable and printed the result of the equation as the temperature. Lastly, we then tested our code alongside real temperature measurements and found that we were reading fairly accurately. Our second use for the ADC was manually controlling the motors to setup for cooking using a sliding potentiometer. This proved to be a fairly easy in implementation. We decided to use the high and low extreme ADC values, 0 and 1024, for moving BeefBot up or down, accordingly. This corresponds to one side or the other side of the slider. To do this we simply compared the read ADC value of the potentiometer, saw whether it was lower than 20 or higher than 1010, and moved it accordingly.
+	        </p>
+
+	        <h2>Motor Control</h2>
+	        <p>
+	        The programming behind motor control primarily focused on utilising the H-Bridge for the up and down motor and setting up a PWM to assist in the control of the flipping motor. The coding for the H-Bridge was very simple. The table below basically describes how it works.
+	        </p>
+	        </div>
+	        <div class="col-sm-3">
+	        </div>
+	        <div class="col-sm-6" style="padding-bottom: -20px">
+	        <table style="width:100%;text-align: center;background-color: #d5d5d5;">
+			  <tr >
+			    <th style="text-align: center">EN</th>
+			    <th style="text-align: center">1A</th> 
+			    <th style="text-align: center">2A</th>
+			    <th style="text-align: center">Function</th>
+			  </tr>
+			  <tr>
+			    <td>H</td>
+			    <td>L</td> 
+			    <td>H</td>
+			    <td>Turn Right</td>
+			  </tr>
+			  <tr>
+			    <td>H</td>
+			    <td>H</td> 
+			    <td>L</td>
+			    <td>Turn Left</td>
+			  </tr>
+			</table>
+			<br/><p style="text-align: center"><i>Table 1: Bidirectional DC Motor Control</i></p>
+			</div>
+			<div class="col-sm-3">
+			</div>
+
+			<div class="col-sm-12">
+	        <p>
+	        Enable simply enables the bridge to work and we leave that on high. 1A and 2A are both input that we connected to two different pins, RB7 and RB3. All we had to do to move the motor up or down was to toggle the corresponding bit of the pin high or low. So whether in our feedback loop or our manual controller, we would take whatever trigger and just set the bit to make it high and clear it to make it low and we used delays for proper durations. 
+	        </p>
+	        <p>
+			As for the PWM, we set it up using an output compare. We connected the output compare to timer2 and then also included a generated period of 40,000, which allows for a sample rate of 1kHz. We then set the output compare to a PWM in the ISR and input a variable we called duty. The variable was basically the duty cycle and we would basically change the value of this variable when the flipping is needed. We would cycle the duty between 0 and 8000, with 0 representing the motor standing still and 8000 being a comfortable flipping rate. 
+	        </p>
+	        <h2>Feedback</h2>
+	        <p>
+	        After having figured out the motor control and temperature sensing, coding our feedback loop was fairly simple. We created a thread to run the feedback. We first defined two temperature thresholds, one for the flip and one for the end internal temperature per sources. This was conducted for each level of cooking of a steak. The feedback loop would utilize these thresholds by constantly checking them against the the actual temperature of the steak. If the flipping threshold is crossed, the thread enables the correct pin and moves the motor up for a 30 seconds using a delay. We did some testing to decide the different delay values. We chose 30 seconds because it gave the steak enough room to flip above the grill. Next, it would change the duty to 8000 for 2120 msec and then back to 0. This proved to be the perfect amount of time for a 180 degree flip. Lastly, it would then descend for another 30 seconds to press the steak back onto the grill. After this, it would now wait for the temperature to cross the second threshold which marks a fully cooked steak. Once it reached this threshold, it moved the steak up off the grill by having the skewers ascend 30 seconds again. With that the steak is done and ready to removed for consumption by the user.             
+	        </p>
+	        <h2>The User Interface</h2>
+	        <p>
+	        The user interface proved to be a very important section of the code as it set the parameters for cooking. We set up two threads for the interface, a button thread and gui thread. The button thread set up a menu selecting button. We would wire the button up to a pin and then set that pin as a digital input. We then read from the input. If the input was high, a variable called MenuSel, for menu selector, would cycle from 0-3. Each number corresponding to one of the four settings. In this same thread, we also defined the threshold values that would go along with each possible selection. We did this by checking what MenuSel was equal to and then changing the threshold accordingly. As for the gui thread, it basically controlled what exactly was drawn to the tft. It would draw each of the selections on the screen, as well as a circle to represent what was selected at the time. The circle’s position depended on the variable menuSel and would change along with the changing of the variable through button pushing. 
+	        </p>
+	        <h2>The Timer</h2>
+	        <p>
+	        The implementation of the timer is very simple. All it does is takes a variable called sys_time_seconds and yields for exactly one second before incrementing the variable. It then prints “cook time” and prints the variable next to it every second. 
 	        </p>
 	      </div>
-	    </div>
 	</div>
  </div>
 
  <!-- Start Hardware Design Content -->
- <div id="Hardware_Design" class="container" style = "padding-top: 100px">
-	<h1 style="margin-left: 5%">Hardware Design</h1>
-	<div class="row">
-	    <div class="row">
+ <div id="Hardware_Design" class="container" style = "padding-top: 100px; width: 800px">
+	<h1>Hardware Design</h1>
+	<div class="row" style="margin-left: 0px">
+
 	      <div class="col-sm-12">
-	        <p style="margin-left: 10%">
-	        I grew up in Orlando FL after moving to the U.S. from Medellin, Colombia in '99 and am currently in Ithaca, NY at Cornell University wrapping up my Master's of Engineering in Mechanical Engineering.
-	        </p>
-	        <p style="margin-left: 10%">
-	        Professionaly I'd describe myself as a mechanical engineer by trade, jack-of-all-trades at heart. I take an inter-disciplinary approach to engineering and take no greater joy at work than wearing multiple hats. My current professional interests lie in robotics and electronic consumer products and my ambition is to help create new ways to empower people and provide them with experiences that make them say "woah.".
+	      <h2>Hardware Overview</h2>
+	        <p>
+	        Beefbot features two DC motors, shown below in Figures *# BELOW* and *# BELOW* (DC Motor Gearmotor 50 RPM 5W 12VDC) for raising the platform and flipping the steak holding components 180 degrees. The motors, as detailed below, are each controlled using PWM input through an L293D H-bridge, shown in Figure *# BELOW*. The pinout and block diagram for this H-Bridge can be seen in Figures X and X.
 	        </p>
 	      </div>
-	    </div>
+
+	      <div class="row" style="margin-left: 0px">
+	      <div class="col-sm-1">
+	       </div>
+	       <div class="col-sm-10">
+	      	 <img src="motAndBridge.jpg" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig X: Thermosistor and 3.5mm Jack</i></p>
+	       </div>
+	       <div class="col-sm-1">
+	       </div>
+	       </div>
+	       <div class="row" style="margin-left: 0px">
+	       <div class="col-sm-1">
+	       </div>
+	       <div class="col-sm-10">
+	      	 <img src="hbridge.jpg" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig X: Thermosistor and 3.5mm Jack</i></p>
+	       </div>
+	       <div class="col-sm-1">
+	       </div>
+	       </div>
+	       <div class="row" style="margin-left: 0px">
+	       <div class="col-sm-12">
+	       <img src="hbridgeBlock.jpg" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig X: Thermosistor and 3.5mm Jack</i></p>
+	       </div>
+	       </div>
+
+	      <div class="col-sm-12">
+	        <p>
+	        Beefbot uses a thermistor in the form of a temperature food probe, which increases in resistance as temperature increases. This needed to be tuned to our ADC values, as is detailed in the results section (Figure *# BELOW*). The thermistor is read using a 2.5mm audio jack, shown below in Figure *# BELOW*, and read to the Big Board as an ADC value.
+	        </p>
+	      </div>
+
+	       <div class="col-sm-1">
+	       </div>
+	       <div class="col-sm-10">
+	      	 <img src="thermAndJack.jpg" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig X: Thermosistor and 3.5mm Jack</i></p>
+	       </div>
+	       <div class="col-sm-1">
+	       </div>
+
+	       <div class="col-sm-12">
+	        <p>
+	        Beefbot uses a thermistor in the form of a temperature food probe, which increases in resistance as temperature increases. This needed to be tuned to our ADC values, as is detailed in the results section (Figure *# BELOW*). The thermistor is read using a 2.5mm audio jack, shown below in Figure *# BELOW*, and read to the Big Board as an ADC value.
+	        </p>
+	      </div>
+
+	       <div class="col-sm-6">
+	      <img src="circuit_back.jpg" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig X: Thermosistor and 3.5mm Jack</i></p>
+	       </div>
+	       <div class="col-sm-6">
+	      	 <img src="pic.jpg" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig X: Thermosistor and 3.5mm Jack</i></p>
+	       </div>
+	     <div class="col-sm-12">
+	     <h2>Debugging</h2>
+	     <p>
+	        The biggest issue we ran into was very noisy temperature data. When the steak was off the grill, the temperature was consistent, to about 2 degrees; however, as soon as the steak went down on the grill the temperature readings jumped around to as much as 20 degrees above or below the value read off the grill. We determined (with Professor Bruce Land’s help) that the grill, given its power input, was creating this noise. A simple resistor-capacitor low-pass filter solved this issue and reduced the noise. The result was a temperature reading that was the same whether the steak was on or off the grill.
+	        </p>
+	        <p>
+Another, smaller issue we encountered was an inconsistent flip. To get the flip to be 180 degrees with no sensors, we needed to fine-tune the amount of time to run the motor for. After doing this, we needed to prevent the thermometer wire from getting in the way of the bolts holding the motor. With careful placement before each test, we can achieve a perfect flip every time.
+
+	        </p>
+	     </div>
+
 	</div>
  </div>
 
  <!-- Start Results Content -->
- <div id="Results" class="container" style = "padding-top: 100px">
-	<h1 style="margin-left: 5%">Results</h1>
-	<div class="row">
-	    <div class="row">
+ <div id="Results" class="container" style = "padding-top: 100px; width: 800px">
+	<h1>Results/ Demo</h1>
+	<div class="row" style="margin-left: 0px">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-10"><iframe width="560" height="315" align="center" src="https://www.youtube.com/embed/fyRwjMZFeJ4" frameborder="0" allowfullscreen></iframe></div>
+		<div class="col-sm-1"></div>
 	      <div class="col-sm-12">
-	        <p style="margin-left: 10%">
-	        I grew up in Orlando FL after moving to the U.S. from Medellin, Colombia in '99 and am currently in Ithaca, NY at Cornell University wrapping up my Master's of Engineering in Mechanical Engineering.
+	        <p>
+	        To calibrate the thermometer -- which was read as an ADC voltage that changes as the thermistor increases in resistance with temperature -- we recorded ADC data points at known temperatures using a separate thermometer. This is shown in Figure *# BELOW*. From the calibration data, we were above to fit temperature, T, as a cubic function of ADC, x.
 	        </p>
-	        <p style="margin-left: 10%">
-	        Professionaly I'd describe myself as a mechanical engineer by trade, jack-of-all-trades at heart. I take an inter-disciplinary approach to engineering and take no greater joy at work than wearing multiple hats. My current professional interests lie in robotics and electronic consumer products and my ambition is to help create new ways to empower people and provide them with experiences that make them say "woah.".
+	     </div>
+	     <div class="col-sm-12">
+	       	<img src="eqn.png" class = "about_img">
+	       </div>
+	     <div class="col-sm-12">
+	       	<img src="calibration.png" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig X: Thermosistor and 3.5mm Jack</i></p>
+	       </div>
+
+	     <div class="col-sm-12">  
+	        <p>
+	        BeefBot takes about 15 minutes to cook a 1 inch thick steak, with zero human input after initially lowering it onto the grill. Figure *# BELOW* shows a typical cook. The heat takes several minutes to reach the thermometer, and reaches 80 F after about 6 minutes. At about 10 minutes, the steak reaches 100 F, which we determined experimentally to be the ideal flipping temperature. The flip is a perfect 180 degrees when the thermometer’s wire does not get in the way. If set up incorrectly, however, it could result in a less than 180 degree flip and require manual adjustment. This would need to be fixed in a future version.
+	        </p>
+	        <p>
+	        From there, the temperature accelerates considerably, and at about 16 minutes, the steak reaches 130 F, the temperature at which we take it off the grill for a medium rare cook. Figure *# BELOW* shows the result of our demo, a perfectly medium rare steak. Temperature is accurate to 2 degrees. This is the normal range of noise after filtering.
+	        </p>
+	       </div>
+
+	       <div class="col-sm-12">
+	       	<img src="TempTestData.png" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig X: Thermosistor and 3.5mm Jack</i></p>
+	       </div>
+	       <div class="col-sm-12">
+	       	<img src="demo.jpg" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig X: Thermosistor and 3.5mm Jack</i></p>
+			</div>
+	       <div class="col-sm-12">
+	        <p>
+	        Safety was a concern both in handling raw and cooked food, and in interfacing our electronics with heat and food. We made the robot food safe by using only purchased, food safe parts for the parts touching the meat: barbecue skewers and a food temperature probe. For having our system close to a heat source, we ensured in our design that only the barbeque skewers and food probe would actually come near the grill. Everything else, including the flipping coupler attaching those parts to the flipper’s DC motor, did not get substantially hotter than room temperature. To keep our electronics away from meat juices, we created a separate electronics platform to keep over a foot away from the cooking setup, shown in Figure *# ABOVE* .
+	        </p>
+	        <p>
+	        Our robot is self-contained and does not communicate externally, so it should be unaffected by interferences, and should not produce its own beyond the normal operation of motors and a microcontroller.
+	        </p>
+	        <p>
+	        The robot is easily usable with minimal instructions. The user simply needs to put the steak on the skewer setup, lower it manually with the potentiometer on to the grill, and let BeefBot do the rest. When the steak is flipping or done, motors can be heard whirring.
 	        </p>
 	      </div>
-	    </div>
 	</div>
  </div>
 
  <!-- Start Conclusion Content -->
- <div id="Conclusion" class="container" style = "padding-top: 100px">
-	<h1 style="margin-left: 5%">Conclusion</h1>
-	<div class="row">
-	    <div class="row">
+ <div id="Conclusion" class="container" style = "padding-top: 100px; width: 800px">
+	<h1>Conclusion</h1>
+	<div class="row" style="margin-left: 0px">
 	      <div class="col-sm-12">
-	        <p style="margin-left: 10%">
-	        I grew up in Orlando FL after moving to the U.S. from Medellin, Colombia in '99 and am currently in Ithaca, NY at Cornell University wrapping up my Master's of Engineering in Mechanical Engineering.
+	        <p>
+	        The end result was a fully functioning steak cooking robot, and we accomplished our goal of making it fully autonomous. We were very satisfied with the project we picked and the end result of our work. If we could do it again, we would add an encoder in the flipping motor to get a perfect 180 degree flip every time.
 	        </p>
-	        <p style="margin-left: 10%">
-	        Professionaly I'd describe myself as a mechanical engineer by trade, jack-of-all-trades at heart. I take an inter-disciplinary approach to engineering and take no greater joy at work than wearing multiple hats. My current professional interests lie in robotics and electronic consumer products and my ambition is to help create new ways to empower people and provide them with experiences that make them say "woah.".
+	        <h2> Standards</h2>
+	        <p>
+	        The applicable standards for our project center around food safety. To avoid investing time into food safe material selection, we were careful to use parts that were already marketed and sold to use with raw and cooked food. The parts of our robot that touch a steak are fully food safe.
+	        </p>
+
+	        <h2> Intellectual Property</h2>
+	        <p>
+	        The design of our robot is completely novel, with the exception of hardware (big board) and code (ADC setup, timer, and PWM) adapted from the ECE 4760 class.Our mechanical design and system are unique and potentially patentable; we plan to investigate this with the Cornell Center for Technology Licensing (CTL). From our search, there does exist at least one company that makes an automatic meat cooker, but none that interface with an existing grill. Additionally, Kelsey Nedd plans to pursue a magazine publication next semester to fulfill his technical writing requirement.
+	        </p>
+
+	        <h2> Ethics</h2>
+	        <p>
+	        In the IEEE Code of Ethics, it is stated that safety is a key responsibility of an IEEE member. In creating BeefBot, we strived to create a real, food safe product. To accomplish this, we integrated existing food safe products into our design. We took the responsibility of creating a food safe product very seriously and also made sure in designing BeefBot that the flipping mechanism would be easily removable and cleanable in a sink. Another responsibility in the IEEE Code of Ethics is to offer an honest and open critique of technical work, and to cite others wherever necessary. In this website, we have offered an honest and open critique of our work, fully disclosing issues we encountered and how we solved them. We credit Professor Bruce Land for providing us the backbone of the project -- the Big Board and a variety of sample codes and demos throughout the semester. Without his class, none of this would have been possible. With this project, we also seek to improve the public’s understanding of robots and their uses and capabilities. For instance, a steak cooking robot does not need to be a 7 degree of freedom robot arm attached to a hyper-intelligent humanoid robot, but rather, can be a few motors and some clever sensing and code.	
 	        </p>
 	      </div>
-	    </div>
 	</div>
  </div>
 
+<div id="Acknowledgements" class="container" style = "padding-top: 100px; width: 800px">
+	<h1>Acknowledgements</h1>
+	<div class="row" style="margin-left: 0px">
+	      <div class="col-sm-12">
+	      <p>We would like to thank Professor Bruce Land for his guidance and enthusiasm in this project. We would also like to thank Brian, our TA for his help in making a plan, as well as a contingency plan for the project period. We had a great time working on BeefBot and ate more than a healthy amount of red meat in the process.
+	      </p>
+	      </div>
+	</div>
+</div>
+<div id="Appendix" class="container" style = "padding-top: 100px;padding-bottom: 100px; width: 800px">
+	<h1>Appendix</h1>
+	<div class="col-sm-12">
+	      <h2>Bill of Materials</h2>
+	</div>
+	        <div class="col-sm-9" style="padding-bottom: -20px">
+	        <table style="width:100%;text-align: center;background-color: #d5d5d5;">
+			  <tr >
+			    <th style="text-align: center">Quantity</th>
+			    <th style="text-align: center">Part</th> 
+			    <th style="text-align: center">Unit Cost</th>
+			    <th style="text-align: center">Total Cost</th>
+			    <th style="text-align: center">Source</th>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>Microstick II</td> 
+			    <td>$1.00</td>
+			    <td>$1.00</td>
+			    <td>Lab</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>Big Board</td> 
+			    <td>$10.00</td>
+			    <td>$10.00</td>
+			    <td>Lab</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>PIC32MX250F128B</td> 
+			    <td>$5.00</td>
+			    <td>$5.00</td>
+			    <td>Lab</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>TFT LCD</td> 
+			    <td>$10.00</td>
+			    <td>$10.00</td>
+			    <td>Lab</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>18V Power Supply</td> 
+			    <td>$5.00</td>
+			    <td>$5.00</td>
+			    <td>Lab</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>White Breadboard</td> 
+			    <td>$6.00</td>
+			    <td>$6.00</td>
+			    <td>Lab</td>
+			  </tr>
+			  <tr>
+			    <td>-</td>
+			    <td>Assorted Resistors/ Capacotprs</td> 
+			    <td>$0.00</td>
+			    <td>$0.00</td>
+			    <td>Lab</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>Slider Potentiometer</td> 
+			    <td>$0.00</td>
+			    <td>$0.00</td>
+			    <td>Lab</td>
+			  </tr>
+			  <tr>
+			    <td>5</td>
+			    <td>Jumper Cables</td> 
+			    <td>$0.10</td>
+			    <td>$0.50</td>
+			    <td>Lab</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>Food Probe</td> 
+			    <td>$6.99</td>
+			    <td>$6.99</td>
+			    <td>Amazon</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>Audio Jack</td> 
+			    <td>$0.96</td>
+			    <td>$0.96</td>
+			    <td>Digi-Key</td>
+			  </tr>
+			  <tr>
+			    <td>2</td>
+			    <td>50 RPM 12V DC Motor</td> 
+			    <td>$11.90</td>
+			    <td>$23.80</td>
+			    <td>Digi-Key</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>12V Power Supply</td> 
+			    <td>$0.00</td>
+			    <td>$0.00</td>
+			    <td>Lab</td>
+			  </tr>
+			  <tr>
+			    <td>2</td>
+			    <td>Food Skewer</td> 
+			    <td>$1.50</td>
+			    <td>$3.00</td>
+			    <td>Walmart</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>24"x24"x0.25" Plywood</td> 
+			    <td>$12.00</td>
+			    <td>$12.00</td>
+			    <td>Lowes</td>
+			  </tr>
+			  <tr>
+			    <td>7</td>
+			    <td>Plumbing Caps</td> 
+			    <td>$0.50</td>
+			    <td>$3.50</td>
+			    <td>Lowes</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>0.75" Diameter PVC Tubing</td> 
+			    <td>$4.00</td>
+			    <td>$4.00</td>
+			    <td>Lowes</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>Lead Screw</td> 
+			    <td>$1.20</td>
+			    <td>$1.20</td>
+			    <td>Lowes</td>
+			  </tr>
+			  <tr>
+			    <td>1</td>
+			    <td>Nut</td> 
+			    <td>$0.20</td>
+			    <td>$0.20</td>
+			    <td>Lab</td>
+			  </tr>
+			  <tr>
+			    <td>-</td>
+			    <td>Aluminum Stock</td> 
+			    <td>$0.00</td>
+			    <td>$0.00</td>
+			    <td>Machine Shop</td>
+			  </tr>
+			  <tr >
+			    <th style="text-align: center"></th>
+			    <th style="text-align: center"></th> 
+			    <th style="text-align: center">Total Cost</th>
+			    <th style="text-align: center">$93.15</th>
+			    <th style="text-align: center"></th>
+			  </tr>
+			</table>
+			</div>
+			<div class="col-sm-3">
+			</div>
+	<div class="col-sm-12">
+	      <h2>Tasks</h2>
+	</div>
+	        <div class="col-sm-12" style="padding-bottom: -20px">
+	        <table style="width:100%;text-align: center;background-color: #d5d5d5;">
+			  <tr >
+			    <th style="text-align: center">Jonah Mittler</th>
+			    <th style="text-align: center">Kelsey Nedd</th> 
+			    <th style="text-align: center">Martin Herrera</th>
+			  </tr>
+			  <tr>
+			    <td>Thermometer calibration</td>
+			    <td>Thermometer calibration</td> 
+			    <td>Main housing design</td>
+			  </tr>
+			  <tr>
+			    <td>Thermometer integration</td>
+			    <td>Programming</td> 
+			    <td>Part selection</td>
+			  </tr>
+			  <tr>
+			    <td>Part selection</td>
+			    <td>Website content</td> 
+			    <td>Guide rail design</td>
+			  </tr>
+			  <tr>
+			    <td>Coupler design and manufacturing</td>
+			    <td>Testing</td> 
+			    <td>Flipper design</td>
+			  </tr>
+			  <tr>
+			    <td>Flipper design and manufacturing</td>
+			    <td></td> 
+			    <td>CAD and drawing</td>
+			  </tr>
+			  <tr>
+			    <td>Assembly</td>
+			    <td></td> 
+			    <td>H-Bridge integration</td>
+			  </tr>
+			  <tr>
+			    <td>Testing</td>
+			    <td></td> 
+			    <td>Website content</td>
+			  </tr>
+			  <tr>
+			    <td>Website Content</td>
+			    <td></td> 
+			    <td>Website design and coding</td>
+			  </tr>
+			</table>
+<!-- 			<div class="col-sm-3">
+	        </div> -->
+	<div class="col-sm-12">
+	      <h2>References</h2>
+	      <p>
+	      	http://www.ti.com/lit/ds/symlink/l293.pdf  <br/>
+	      	https://www.cindergrill.com/
+	      </p>
+	</div>
+	<div class="col-sm-12">
+	      <h2>Schematic</h2>
+	</div>
+	<div class="col-sm-12">
+	       	<img src="schematic.jpg" class = "about_img"> <br/> <p style = "text-align: center"><i>Fig X: Thermosistor and 3.5mm Jack</i></p>
+	</div>
+</div>
 </div>
 
 <!-- End Home Content --> 

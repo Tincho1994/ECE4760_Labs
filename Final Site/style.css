@@ -47,7 +47,7 @@ h4{
     color: #0d0d0d;
     font-family: 'Lato',sans-serif;
     opacity: .8;
-    font-size: 25px;
+    font-size: 12px;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: .1em;
@@ -55,11 +55,13 @@ h4{
 }
 
 h2{ 
-    color: #2b2b2b;
+    /*color: #2b2b2b;*/
+    color: #4b4a4a;
+    font-family: "Raleway", sans-serif;
     text-align: left;
     opacity: .8;
     display: block;
-    margin-bottom: 5px;    
+    margin-bottom: 20px;    
     letter-spacing: .05em;
 /*    font-family: arial, sans-serif;*/
     font-size: 24px;
